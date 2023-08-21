@@ -1,11 +1,12 @@
-import { AcademicSemester, Prisma, PrismaClient } from "@prisma/client";
+import { AcademicSemester, Prisma } from "@prisma/client";
 import { paginationHelpers } from "../../../helpers/paginationHelper";
 import { IGenericResponse } from "../../../interfaces/common";
 import { IPaginationOptions } from "../../../interfaces/pagination";
+import prisma from "../../../shared/prisma";
 import { AcademicSemesterSearchAbleFields } from "./academicSemester.constants";
 import { IAcademicSemesterFilterRequest } from "./academicSemester.interface";
 
-const prisma = new PrismaClient();
+
 
 const insertIntoDB = async (academicSemesterData: AcademicSemester): Promise<AcademicSemester> => {
     const result = await prisma.academicSemester.create({
@@ -22,6 +23,8 @@ const getAllFromDB = async (
 ): Promise<IGenericResponse<AcademicSemester[]>> => {
     const { page, limit, skip } = paginationHelpers.calculatePagination(options);
     const { searchTerm, ...filterData } = filters;
+    
+    console.log(options);
     
     // console.log(filterData, filters);
 
@@ -56,7 +59,14 @@ const getAllFromDB = async (
     const result = await prisma.academicSemester.findMany({
         where: whereConditions,
         skip,
-        take: limit
+        take: limit,
+        orderBy: options.sortBy && options.sortOrder
+        ? {
+            [options.sortBy] : options.sortOrder
+        }
+        :{
+            createdAt: 'desc'
+        }
     });
 
     const total = await prisma.academicSemester.count();
@@ -70,10 +80,20 @@ const getAllFromDB = async (
     }
 }
 
-
+const getDataById = async(id: string): Promise<AcademicSemester | null> => {
+    const result = await prisma.academicSemester.findUnique({
+        where: {
+            // id: id
+            id
+        }
+    })
+    
+    return result;
+}
 
 
 export const AcademicSemesterService = {
     insertIntoDB,
-    getAllFromDB
+    getAllFromDB,
+    getDataById
 }
