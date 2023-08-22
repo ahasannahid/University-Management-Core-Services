@@ -3,8 +3,8 @@ import httpStatus from 'http-status';
 import catchAsync from '../../../shared/catchAsync';
 import pick from '../../../shared/pick';
 import sendResponse from '../../../shared/sendResponse';
-import { AcademicDepartmentService } from './academicDepartment.service';
 import { academicDepartmentFilterableFields } from './academicDepartment.contants';
+import { AcademicDepartmentService } from './academicDepartment.service';
 
 const insertIntoDB = catchAsync(async (req: Request, res: Response) => {
     const result = await AcademicDepartmentService.insertIntoDB(req.body);
@@ -29,16 +29,16 @@ const getAllFromDB = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
-// const getByIdFromDB = catchAsync(async (req: Request, res: Response) => {
-//     const { id } = req.params;
-//     const result = await AcademicDepartmentService.getByIdFromDB(id);
-//     sendResponse(res, {
-//         statusCode: httpStatus.OK,
-//         success: true,
-//         message: 'AcademicDepartment fetched successfully',
-//         data: result
-//     });
-// });
+const getByIdFromDB = catchAsync(async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const result = await AcademicDepartmentService.getByIdFromDB(id);
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: 'AcademicDepartment fetched successfully',
+        data: result
+    });
+});
 
 
 
@@ -46,5 +46,5 @@ const getAllFromDB = catchAsync(async (req: Request, res: Response) => {
 export const AcademicDepartmentController = {
     insertIntoDB,
     getAllFromDB,
-    // getByIdFromDB,
+    getByIdFromDB,
 };
