@@ -1,10 +1,10 @@
 import { AcademicFaculty, Prisma } from "@prisma/client";
+import { paginationHelpers } from "../../../helpers/paginationHelper";
 import { IGenericResponse } from "../../../interfaces/common";
 import { IPaginationOptions } from "../../../interfaces/pagination";
 import prisma from "../../../shared/prisma";
 import { academicFacultySearchableFields } from "./academicfaculty.constants";
 import { IAcademicFacultyFilterRequest } from "./academicfaculty.interface";
-import { paginationHelpers } from "../../../helpers/paginationHelper";
 
 const insertIntoDB = async (data: AcademicFaculty): Promise<AcademicFaculty> => {
     const result = await prisma.academicFaculty.create({
@@ -74,7 +74,18 @@ const getAllFromDB = async (
 };
 
 
+const getByIdFromDB = async (id: string): Promise<AcademicFaculty | null> => {
+    const result = await prisma.academicFaculty.findUnique({
+        where: {
+            id
+        }
+    });
+    return result;
+};
+
+
 export const AcademicFacultyService = {
     insertIntoDB,
-    getAllFromDB
+    getAllFromDB,
+    getByIdFromDB
 }
