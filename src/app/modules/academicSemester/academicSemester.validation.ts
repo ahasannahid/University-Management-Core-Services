@@ -18,8 +18,19 @@ const create = z.object({
             required_error: "End Month is required"
         }),
     })
-})
+});
+
+const update = z.object({
+    body: z.object({
+        title: z.string().optional(),
+        code: z.string().optional(),
+        year: z.number().optional(),
+        startMonth: z.string().optional(),
+        endMonth: z.string().optional()
+    })
+});
 
 export const AcademicSemesterValidation = {
-    create
+    create,
+    update
 }
