@@ -25,6 +25,7 @@ export const studentRelationalFields: string[] = [
     'academicDepartmentId',
     'academicSemesterId'
 ];
+
 export const studentRelationalFieldsMapper: { [key: string]: string } = {
     academicFacultyId: 'academicFaculty',
     academicDepartmentId: 'academicDepartment',

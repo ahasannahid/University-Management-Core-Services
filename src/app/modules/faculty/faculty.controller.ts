@@ -42,8 +42,11 @@ const getByIdFromDB = catchAsync(async (req: Request, res: Response) => {
 
 
 
+
+
+
 export const FacultyController = {
     insertIntoDB,
     getAllFromDB,
-    getByIdFromDB,
+    getByIdFromDB
 };

@@ -103,8 +103,12 @@ const getByIdFromDB = async (id: string): Promise<Faculty | null> => {
 };
 
 
+
+
+
 export const FacultyService = {
     insertIntoDB,
     getAllFromDB,
     getByIdFromDB,
+    
 };
